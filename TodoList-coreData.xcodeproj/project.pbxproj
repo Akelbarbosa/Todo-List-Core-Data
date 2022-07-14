@@ -14,6 +14,13 @@
 		C43127CD287FC93100B4FFE6 /* TodoList_coreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C43127CB287FC93100B4FFE6 /* TodoList_coreData.xcdatamodeld */; };
 		C43127CF287FC93300B4FFE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C43127CE287FC93300B4FFE6 /* Assets.xcassets */; };
 		C43127D2287FC93300B4FFE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43127D0287FC93300B4FFE6 /* LaunchScreen.storyboard */; };
+		C43127DA287FCAEF00B4FFE6 /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127D9287FCAEF00B4FFE6 /* ActivityCell.swift */; };
+		C43127DF287FCE3F00B4FFE6 /* Tasks+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127DB287FCE3F00B4FFE6 /* Tasks+CoreDataClass.swift */; };
+		C43127E0287FCE3F00B4FFE6 /* Tasks+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127DC287FCE3F00B4FFE6 /* Tasks+CoreDataProperties.swift */; };
+		C43127E1287FCE3F00B4FFE6 /* Activities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127DD287FCE3F00B4FFE6 /* Activities+CoreDataClass.swift */; };
+		C43127E2287FCE3F00B4FFE6 /* Activities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127DE287FCE3F00B4FFE6 /* Activities+CoreDataProperties.swift */; };
+		C43127E5287FD30400B4FFE6 /* ListTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127E4287FD30400B4FFE6 /* ListTaskViewController.swift */; };
+		C43127E7287FD3A200B4FFE6 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43127E6287FD3A200B4FFE6 /* TaskCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,13 @@
 		C43127CE287FC93300B4FFE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C43127D1287FC93300B4FFE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C43127D3287FC93300B4FFE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C43127D9287FCAEF00B4FFE6 /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		C43127DB287FCE3F00B4FFE6 /* Tasks+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tasks+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C43127DC287FCE3F00B4FFE6 /* Tasks+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tasks+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C43127DD287FCE3F00B4FFE6 /* Activities+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Activities+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C43127DE287FCE3F00B4FFE6 /* Activities+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Activities+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C43127E4287FD30400B4FFE6 /* ListTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTaskViewController.swift; sourceTree = "<group>"; };
+		C43127E6287FD3A200B4FFE6 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +72,47 @@
 		C43127C1287FC93100B4FFE6 /* TodoList-coreData */ = {
 			isa = PBXGroup;
 			children = (
+				C43127E3287FCEF100B4FFE6 /* Model */,
+				C43127E9287FEFFD00B4FFE6 /* Controllers */,
+				C43127E8287FEFE900B4FFE6 /* View */,
+				C43127C8287FC93100B4FFE6 /* Main.storyboard */,
 				C43127C2287FC93100B4FFE6 /* AppDelegate.swift */,
 				C43127C4287FC93100B4FFE6 /* SceneDelegate.swift */,
-				C43127C6287FC93100B4FFE6 /* ViewController.swift */,
-				C43127C8287FC93100B4FFE6 /* Main.storyboard */,
 				C43127CE287FC93300B4FFE6 /* Assets.xcassets */,
 				C43127D0287FC93300B4FFE6 /* LaunchScreen.storyboard */,
 				C43127D3287FC93300B4FFE6 /* Info.plist */,
 				C43127CB287FC93100B4FFE6 /* TodoList_coreData.xcdatamodeld */,
 			);
 			path = "TodoList-coreData";
+			sourceTree = "<group>";
+		};
+		C43127E3287FCEF100B4FFE6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C43127DD287FCE3F00B4FFE6 /* Activities+CoreDataClass.swift */,
+				C43127DE287FCE3F00B4FFE6 /* Activities+CoreDataProperties.swift */,
+				C43127DC287FCE3F00B4FFE6 /* Tasks+CoreDataProperties.swift */,
+				C43127DB287FCE3F00B4FFE6 /* Tasks+CoreDataClass.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C43127E8287FEFE900B4FFE6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C43127E6287FD3A200B4FFE6 /* TaskCell.swift */,
+				C43127D9287FCAEF00B4FFE6 /* ActivityCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C43127E9287FEFFD00B4FFE6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C43127C6287FC93100B4FFE6 /* ViewController.swift */,
+				C43127E4287FD30400B4FFE6 /* ListTaskViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,8 +187,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C43127C7287FC93100B4FFE6 /* ViewController.swift in Sources */,
+				C43127E2287FCE3F00B4FFE6 /* Activities+CoreDataProperties.swift in Sources */,
 				C43127C3287FC93100B4FFE6 /* AppDelegate.swift in Sources */,
+				C43127E5287FD30400B4FFE6 /* ListTaskViewController.swift in Sources */,
+				C43127E1287FCE3F00B4FFE6 /* Activities+CoreDataClass.swift in Sources */,
+				C43127DA287FCAEF00B4FFE6 /* ActivityCell.swift in Sources */,
 				C43127CD287FC93100B4FFE6 /* TodoList_coreData.xcdatamodeld in Sources */,
+				C43127E7287FD3A200B4FFE6 /* TaskCell.swift in Sources */,
+				C43127E0287FCE3F00B4FFE6 /* Tasks+CoreDataProperties.swift in Sources */,
+				C43127DF287FCE3F00B4FFE6 /* Tasks+CoreDataClass.swift in Sources */,
 				C43127C5287FC93100B4FFE6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
