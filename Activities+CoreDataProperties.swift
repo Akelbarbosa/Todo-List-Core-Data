@@ -2,7 +2,7 @@
 //  Activities+CoreDataProperties.swift
 //  TodoList-coreData
 //
-//  Created by Akel Barbosa on 13/07/22.
+//  Created by Akel Barbosa on 17/07/22.
 //
 //
 

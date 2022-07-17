@@ -16,14 +16,9 @@ class ActivityCell: UITableViewCell {
         return label
     }()
     
-    func setup() {
-    
-        
-    }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setup()
+
         contentView.addSubview(activitiesTitle)
         activitiesTitle.text = "Actividades"
         
@@ -32,8 +27,6 @@ class ActivityCell: UITableViewCell {
             activitiesTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             activitiesTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
         ])
-        
-        
     }
     
     func configure(activity: Activities ){

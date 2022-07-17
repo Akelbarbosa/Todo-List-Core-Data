@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ListTaskViewController: UIViewController {
     
@@ -13,6 +14,7 @@ class ListTaskViewController: UIViewController {
     
     private var models = [Tasks]()
     var activity: Activities?
+    var cell = TaskCell()
     
     private let listTask: UITableView = {
         let table = UITableView()
@@ -34,8 +36,6 @@ class ListTaskViewController: UIViewController {
         addTask.addAction(UIAlertAction(title: "Agregar", style: .default, handler: { action in
             guard let fields = addTask.textFields?.first, let text = fields.text, !text.isEmpty else { return}
             self.createTask(name: text, done: false)
-
-
         } ))
         
         present(addTask, animated: true)
@@ -58,6 +58,16 @@ class ListTaskViewController: UIViewController {
         listTask.delegate = self
         view.addSubview(listTask)
         listTask.frame = view.bounds
+        
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.addTarget(self, action: #selector(tapClick))
+        
+    }
+    
+    @objc func tapClick(){
+        print("toque la pantalla")
+        view.endEditing(true)
     }
     
     func createTask(name: String, done: Bool) {
@@ -68,6 +78,12 @@ class ListTaskViewController: UIViewController {
         activity?.addToTasks(newTask)
         
         do {
+            let activitiesSave = try context.fetch(Activities.fetchRequest())
+            let activiteMain = activitiesSave.filter({
+                    $0.name == self.activity?.name
+            }).first
+            
+            activiteMain?.addToTasks(newTask)
             try context.save()
             getAllTask()
 
@@ -77,13 +93,25 @@ class ListTaskViewController: UIViewController {
         
     }
     
-    
     func getAllTask() {
         
         do {
-            let task = try context.fetch(Tasks.fetchRequest())
-            models = task.filter({
-                $0.activity?.name == self.activity?.name
+//            let request = Tasks.fetchRequest() as NSFetchRequest<Tasks>
+//            let predicate = NSPredicate(format: "activity.name CONTAINS %@","\(self.activity?.name)" )
+//
+//            request.predicate = predicate
+//
+//            let task = try context.fetch(request)
+//            models = task
+//            print(task)
+//
+            
+            let model = try context.fetch(Tasks.fetchRequest())
+            DispatchQueue.main.async {
+                self.listTask.reloadData()
+            }
+            models = model.filter({
+                    $0.activity?.name == self.activity?.name
             })
 
             DispatchQueue.main.async {
@@ -95,7 +123,7 @@ class ListTaskViewController: UIViewController {
         
     }
     
-    func updateStateTask(task: Tasks,state: Bool) {
+    func updateStateTask(task: Tasks, state: Bool) {
         task.done = state
         
         do {
@@ -127,7 +155,7 @@ extension ListTaskViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as? TaskCell else {return UITableViewCell()}
-   
+        cell.taskForCell = models[indexPath.row]
         cell.configure(Task: models[indexPath.row])
         
         return cell
@@ -137,12 +165,16 @@ extension ListTaskViewController: UITableViewDataSource, UITableViewDelegate {
         return 60
     }
     
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//        let task = models[indexPath.row]
+//        let state = !task.done
+//        updateStateTask(task: task, state: state)
+//
+//    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let task = models[indexPath.row]
-        let state = !task.done
-        updateStateTask(task: task, state: state)
-        
+        print("indexPath")
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -152,8 +184,4 @@ extension ListTaskViewController: UITableViewDataSource, UITableViewDelegate {
 
         }
     }
-    
-    
-    
-        
 }

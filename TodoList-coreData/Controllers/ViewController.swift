@@ -91,6 +91,7 @@ class ViewController: UIViewController {
         let newActivity = Activities(context: context)
         newActivity.name = name
         
+        
         do {
             try context.save()
             getAllActivities()
@@ -141,7 +142,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        print("actividad: \(indexPath.row)")
         let listTaskView = ListTaskViewController()
         listTaskView.activity = models[indexPath.row]
         navigationController?.pushViewController(listTaskView, animated: true)
