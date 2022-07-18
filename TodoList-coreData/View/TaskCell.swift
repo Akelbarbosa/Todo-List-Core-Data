@@ -50,24 +50,15 @@ class TaskCell: UITableViewCell {
         contentView.addSubview(nameTask)
         contraints()
 
+        
+        
     }
 
     @objc func taskMake() {
         let statusTask = taskForCell?.done
-    
         taskForCell?.done = !statusTask!
         configButton(task: taskForCell!)
         taskToSave()
-        
-//        do {
-//            taskToEdit()
-//            taskToMakeChange?.done = !statusTask!
-//            configButton(task: taskToMakeChange!)
-//            try context.save()
-//
-//        } catch {
-//            print("Error al actualizar")
-//        }
             
     }
     
@@ -77,49 +68,6 @@ class TaskCell: UITableViewCell {
 
     }
 
-    func taskToEdit(){
-        do {
-            let taskSaved = try context.fetch(Tasks.fetchRequest())
-            taskToMakeChange = taskSaved.filter({
-                $0.name == self.taskForCell?.name
-            }).first
-
-        } catch {
-            print("Error al buscar")
-        }
-    }
-    
-    
-    public func updateNameTask() {
-        
-        guard let fields = nameTask.text, !fields.isEmpty else { return print("esta vacio")}
-            
-        taskForCell?.name = fields
-        taskToSave()
-        
-//        do {
-//            taskToEdit()
-//            taskToMakeChange?.name = fields
-//            configure(Task: taskToMakeChange!)
-//            try context.save()
-//
-//        } catch {
-//            print("Error al actualizar")
-//        }
-        
-        
-
-    }
-    
-    func taskToSave() {
-        do {
-            try context.save()
-        } catch {
-            print("Error al guardar")
-        }
-        
-    }
-    
     func configButton(task: Tasks) {
         if task.done == false {
             button.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -140,12 +88,43 @@ class TaskCell: UITableViewCell {
     }
 }
 
-extension TaskCell: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+extension TaskCell {
+    func taskToEdit(){
+        do {
+            let taskSaved = try context.fetch(Tasks.fetchRequest())
+            taskToMakeChange = taskSaved.filter({
+                $0.name == self.taskForCell?.name
+            }).first
 
+        } catch {
+            print("Error al buscar")
+        }
+    }
+    
+    
+    public func updateNameTask() {
+        guard let fields = nameTask.text, !fields.isEmpty else { return print("esta vacio")}
+        taskForCell?.name = fields
+        taskToSave()
+        
+    }
+    
+    func taskToSave() {
+        do {
+            try context.save()
+        } catch {
+            print("Error al guardar")
+        }
+    }
+    
+}
+
+extension TaskCell: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let fields = textField.text, !fields.isEmpty else {return}
         updateNameTask()
-        return true
+
     }
 }
+
+

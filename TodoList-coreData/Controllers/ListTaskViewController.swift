@@ -14,7 +14,7 @@ class ListTaskViewController: UIViewController {
     
     private var models = [Tasks]()
     var activity: Activities?
-    var cell = TaskCell()
+
     
     private let listTask: UITableView = {
         let table = UITableView()
@@ -66,7 +66,6 @@ class ListTaskViewController: UIViewController {
     }
     
     @objc func tapClick(){
-        print("toque la pantalla")
         view.endEditing(true)
     }
     
@@ -96,20 +95,8 @@ class ListTaskViewController: UIViewController {
     func getAllTask() {
         
         do {
-//            let request = Tasks.fetchRequest() as NSFetchRequest<Tasks>
-//            let predicate = NSPredicate(format: "activity.name CONTAINS %@","\(self.activity?.name)" )
-//
-//            request.predicate = predicate
-//
-//            let task = try context.fetch(request)
-//            models = task
-//            print(task)
-//
-            
             let model = try context.fetch(Tasks.fetchRequest())
-            DispatchQueue.main.async {
-                self.listTask.reloadData()
-            }
+
             models = model.filter({
                     $0.activity?.name == self.activity?.name
             })
@@ -165,14 +152,6 @@ extension ListTaskViewController: UITableViewDataSource, UITableViewDelegate {
         return 60
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        let task = models[indexPath.row]
-//        let state = !task.done
-//        updateStateTask(task: task, state: state)
-//
-//    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("indexPath")
     }
@@ -185,3 +164,6 @@ extension ListTaskViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 }
+
+    
+

@@ -36,10 +36,8 @@ class ViewController: UIViewController {
         
         addCategorie.addAction(UIAlertAction(title: "Agregar", style: .default, handler: { action in
             guard let fields = addCategorie.textFields?.first, let text = fields.text, !text.isEmpty else { return}
-            
             self.createActivity(name: text)
             
-
         } ))
         
         present(addCategorie, animated: true)
@@ -48,7 +46,6 @@ class ViewController: UIViewController {
     func setup() {
         view.backgroundColor = .systemBackground
         title = "Lista de actividades"
-        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         let buttonAdd = UIImage(systemName: "plus.circle")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
@@ -67,50 +64,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        view.addSubview(listActivities)
         getAllActivities()
+        view.addSubview(listActivities)
         listActivities.dataSource = self
         listActivities.delegate = self
-        
         constraintsElemen()
     }
     
-    func getAllActivities() {
-        
-        do {
-            models = try context.fetch(Activities.fetchRequest())
-            DispatchQueue.main.async {
-                self.listActivities.reloadData()
-            }
-        } catch {
-            print("Error al guardar actividad")
-        }
-    }
     
-    func createActivity(name: String) {
-        let newActivity = Activities(context: context)
-        newActivity.name = name
-        
-        
-        do {
-            try context.save()
-            getAllActivities()
-        } catch {
-            print("Error al guardar actividad")
-        }
-        
-    }
-    
-    
-    func deleteActivity(activity: Activities) {
-        context.delete(activity)
-        do {
-            try context.save()
-            getAllActivities()
-        } catch {
-            print("Error al guardar actividad")
-        }
-    }
 
 }
 
@@ -131,23 +92,55 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return 60
     }
     
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
             deleteActivity(activity: models[indexPath.row])
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let listTaskView = ListTaskViewController()
+        listTaskView.activity = models[indexPath.row]
+        navigationController?.pushViewController(listTaskView, animated: true)
+    }
 
+}
+
+
+extension ViewController {
+    func getAllActivities() {
+        
+        do {
+            models = try context.fetch(Activities.fetchRequest())
+            DispatchQueue.main.async {
+                self.listActivities.reloadData()
+            }
+        } catch {
+            print("Error al guardar actividad")
+        }
+    }
+    
+    func createActivity(name: String) {
+        let newActivity = Activities(context: context)
+        newActivity.name = name
+        
+        do {
+            try context.save()
+            getAllActivities()
+        } catch {
+            print("Error al guardar actividad")
         }
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("actividad: \(indexPath.row)")
-        let listTaskView = ListTaskViewController()
-        listTaskView.activity = models[indexPath.row]
-        navigationController?.pushViewController(listTaskView, animated: true)
-        
+    func deleteActivity(activity: Activities) {
+        context.delete(activity)
+        do {
+            try context.save()
+            getAllActivities()
+        } catch {
+            print("Error al guardar actividad")
+        }
     }
-    
-    
 }
